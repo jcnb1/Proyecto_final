@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm
 from django.contrib.auth import logout as do_logout
+from .forms import MascotaForm
 
 def Home(request):
     ctx = {}
@@ -54,3 +55,13 @@ def logout(request):
     do_logout(request)
     # Redireccionamos a la portada
     return redirect('/')
+
+def mascota_view(request):
+    if request.method =='POST':
+        form = MascotaForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('')
+    else:
+        form = MascotaForm()
+    return render(request,'formulario.html', {'form': form})            
